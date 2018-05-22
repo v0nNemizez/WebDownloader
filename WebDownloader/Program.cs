@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net;
-using System.Net.Http;
+
 
 namespace WebDownloader
 {
@@ -26,21 +26,26 @@ namespace WebDownloader
             string responseFromServer = reader.ReadToEnd();
 
 
-            using (FileStream fs = File.Create(path))
-            {
-                File.WriteAllText(path, responseFromServer);
-            }
+            // using (FileStream fs = File.Create(path))
+            // {
+
+            //    File.WriteAllText(path, responseFromServer);
+
+            // }
 
             Console.WriteLine(responseFromServer);
-            
+            Console.ReadKey();
+
+
             reader.Close();
             dataStream.Close();
             response.Close();
+            
           
 
 
 
-            Console.ReadKey();
+            
 
             
         }

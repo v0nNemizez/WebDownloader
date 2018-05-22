@@ -1,34 +1,48 @@
 ﻿using System;
+using System.IO;
+using System.Net;
 using System.Net.Http;
 
 namespace WebDownloader
 {
      class Program
     {
-         static async void Main(string[] args)
+         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-            Console.WriteLine("Starting HTTP Client");
-            HttpClient client = new HttpClient(); 
+            string path = @"c:\temp\MyTest.html";
 
-            try
+            WebRequest request = WebRequest.Create("http://www.vg.no");
+            request.Credentials = CredentialCache.DefaultCredentials;
+            
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+
+            Console.WriteLine(response.StatusDescription);
+           
+            Stream dataStream = response.GetResponseStream();
+            
+            StreamReader reader = new StreamReader(dataStream);
+            
+            string responseFromServer = reader.ReadToEnd();
+
+
+            using (FileStream fs = File.Create(path))
             {
-                HttpResponseMessage response = await client.GetAsync("http://google.com");
-                response.EnsureSuccessStatusCode();
-                string responseBody = await response.Content.ReadAsStringAsync();
-
-                Console.WriteLine(responseBody);
-            }
-            catch(HttpRequestException e)
-            {
-                Console.WriteLine("\nException Caught!");
-                Console.WriteLine("Message :{0} ", e.Message);
-                Console.WriteLine("Press a key to Exit");
-                Console.ReadKey();
-
+                File.WriteAllText(path, responseFromServer);
             }
 
-            client.Dispose();
+            Console.WriteLine(responseFromServer);
+            
+            reader.Close();
+            dataStream.Close();
+            response.Close();
+          
+
+
+
+            Console.ReadKey();
+
+            
         }
 
 

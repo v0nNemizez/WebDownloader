@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Text;
 
 
 namespace WebDownloader
@@ -26,12 +27,20 @@ namespace WebDownloader
             string responseFromServer = reader.ReadToEnd();
 
 
-            // using (FileStream fs = File.Create(path))
-            // {
+            using (FileStream fs = File.Create(path))
+            {
+                // writing data in string
+                string dataasstring = responseFromServer; //your data
+                byte[] info = new UTF8Encoding(true).GetBytes(dataasstring);
+                fs.Write(info, 0, info.Length);
 
-            //    File.WriteAllText(path, responseFromServer);
+                // writing data in bytes already
+                byte[] data = new byte[] { 0x0 };
+                fs.Write(data, 0, data.Length);
+                fs.Close();
+            }
 
-            // }
+
 
             Console.WriteLine(responseFromServer);
             Console.ReadKey();

@@ -29,12 +29,12 @@ namespace WebDownloader
 
             using (FileStream fs = File.Create(path))
             {
-                // writing data in string
-                string dataasstring = responseFromServer; //your data
+             
+                string dataasstring = responseFromServer; 
                 byte[] info = new UTF8Encoding(true).GetBytes(dataasstring);
                 fs.Write(info, 0, info.Length);
 
-                // writing data in bytes already
+     
                 byte[] data = new byte[] { 0x0 };
                 fs.Write(data, 0, data.Length);
                 fs.Close();

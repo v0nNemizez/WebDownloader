@@ -11,10 +11,15 @@ namespace WebDownloader
          static void Main(string[] args)
         {
             string path = @"c:\temp\MyTest.html";
+            string url;
 
-            WebRequest request = WebRequest.Create("http://www.vg.no");
+            Console.WriteLine("Enter url of website: http://blabla.com");
+            url = Console.ReadLine();
+
+
+            WebRequest request = WebRequest.Create(url);
             request.Credentials = CredentialCache.DefaultCredentials;
-            
+         
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
 
@@ -39,8 +44,6 @@ namespace WebDownloader
                 fs.Write(data, 0, data.Length);
                 fs.Close();
             }
-
-
 
             Console.WriteLine(responseFromServer);
             Console.ReadKey();
